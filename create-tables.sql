@@ -1,1 +1,27 @@
+CREATE TABLE blog_user
+(id INT IDENTITY(1, 1) PRIMARY KEY,
+_user VARCHAR UNIQUE NOT NULL,
+_password VARCHAR NOT NULL,
+name VARCHAR NOT NULL,
+email VARCHAR UNIQUE,
+photo VARCHAR,
+about VARCHAR,
+admin INT NOT NULL,
+writter INT NOT NULL,
+reader INT NOT NULL);
 
+CREATE TABLE blog_category
+(id INT IDENTITY(1, 1) PRIMARY KEY,
+name VARCHAR UNIQUE NOT NULL,
+parent VARCHAR NOT NULL DEFAULT 'root');
+
+CREATE TABLE blog_post
+(id INT IDENTITY(1, 1) PRIMARY KEY,
+title VARCHAR NOT NULL,
+date DATE NOT NULL,
+author INT,
+CONSTRAINT FK_author FOREIGN KEY (author) REFERENCES blog_user(id),
+category INT,
+CONSTRAINT FK_category FOREIGN KEY (category) REFERENCES blog_category(id),
+body NVARCHAR(MAX),
+tags VARCHAR);
